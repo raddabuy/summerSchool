@@ -5,10 +5,10 @@
         "version": "1.0"
     },
     "paths": {
-        "/testing/public/api/v1/session/create": {
+        "/api/v1/session/create": {
             "post": {
                 "tags": [
-                    "payment session"
+                    "Session"
                 ],
                 "description": "Create payment session",
                 "operationId": "App\\Http\\Swagger\\PaymentAPIController::createSessionId",
@@ -49,6 +49,62 @@
                                                 "sessionId": "string"
                                             }
                                         ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/pay": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "description": "Create transaction",
+                "operationId": "App\\Http\\Swagger\\PaymentAPIController::pay",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "sum",
+                                    "details"
+                                ],
+                                "properties": {
+                                    "card_number": {
+                                        "description": "Номер карты",
+                                        "type": "string"
+                                    },
+                                    "cvc": {
+                                        "description": "CVV/CVC",
+                                        "type": "string"
+                                    },
+                                    "dates": {
+                                        "description": "Dates",
+                                        "type": "string"
+                                    },
+                                    "sessionId": {
+                                        "description": "Session ID",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create payment session",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "success": "true",
+                                        "data": "Транзакция прошла успешно!"
                                     }
                                 }
                             }

@@ -18,8 +18,8 @@ Route::group(['prefix' => 'v1'], function () {
 //    return $request->user();
 
 
-        Route::get('test', 'TestAPIController@test');
         Route::post('session/create', 'PaymentAPIController@createSessionID');
+        Route::post('pay', 'PaymentAPIController@pay');
 
     });
 

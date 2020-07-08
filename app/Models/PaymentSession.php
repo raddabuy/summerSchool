@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Session extends Model
+class PaymentSession extends Model
 {
     public $table = 'sessions';
 
