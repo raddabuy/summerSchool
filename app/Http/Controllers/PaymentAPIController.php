@@ -10,6 +10,7 @@ use App\Models\PaymentSession;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 /**
@@ -36,8 +37,8 @@ class PaymentAPIController extends Controller
         ]);
 
         session(['sessionId' => $sessionId]);
+        Session::save();
 
-//        dd(session('sessionId'));
         return $this->responseOk([
             'sessionId' => $sessionId
         ]);
@@ -51,11 +52,13 @@ class PaymentAPIController extends Controller
      */
     public function pay(PaymentRequest $request)
     {
+        //Compare saved session ID with received session ID
+        if($request->get('sessionId') != session('sessionId')){
+            $error = new Exception('The session finished or wrong sessionId' , 422);
+
+            throw $error;
+        }
         $session = PaymentSession::where('sessionId',$request->get('sessionId'))->first();
-
-//        session(['sessionId' => 'wsvfbc']);
-
-        dd(session('sessionId'));
 
         //Check if session exists
         if(!$session){
