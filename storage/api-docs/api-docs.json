@@ -1,0 +1,61 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LawApp",
+        "version": "1.0"
+    },
+    "paths": {
+        "/testing/public/api/v1/session/create": {
+            "post": {
+                "tags": [
+                    "payment session"
+                ],
+                "description": "Create payment session",
+                "operationId": "App\\Http\\Swagger\\PaymentAPIController::createSessionId",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "sum",
+                                    "details"
+                                ],
+                                "properties": {
+                                    "sum": {
+                                        "description": "Сумма платежа",
+                                        "type": "numeric"
+                                    },
+                                    "details": {
+                                        "description": "Назначение платежа",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create payment session",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "success": "true",
+                                        "data": [
+                                            {
+                                                "sessionId": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
