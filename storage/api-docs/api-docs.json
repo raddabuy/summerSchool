@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "LawApp",
+        "title": "Summer School",
         "version": "1.0"
     },
     "paths": {
@@ -44,11 +44,9 @@
                                 "schema": {
                                     "example": {
                                         "success": "true",
-                                        "data": [
-                                            {
-                                                "sessionId": "string"
-                                            }
-                                        ]
+                                        "data": {
+                                            "sessionId": "string"
+                                        }
                                     }
                                 }
                             }
@@ -70,8 +68,10 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "sum",
-                                    "details"
+                                    "card_number",
+                                    "cvc",
+                                    "dates",
+                                    "sessionId"
                                 ],
                                 "properties": {
                                     "card_number": {
@@ -105,6 +105,109 @@
                                     "example": {
                                         "success": "true",
                                         "data": "Транзакция прошла успешно!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/transactions": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "description": "Get transaction",
+                "operationId": "App\\Http\\Swagger\\PaymentAPIController::getTransactions",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "От (08/07/2020)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "До (09/07/2020)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtain transactions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "success": "true",
+                                        "data": [
+                                            {
+                                                "id": 1,
+                                                "card_number": "1234",
+                                                "cvc": "1234",
+                                                "dates": "01/24",
+                                                "status": "1",
+                                                "session_id": 10,
+                                                "created_at": "2020-07-08 13:34:53",
+                                                "updated_at": "2020-07-08 13:34:53"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "description": "Login",
+                "operationId": "App\\Http\\Swagger\\UserAPIController::login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create payment session",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "success": "true",
+                                        "data": "string"
                                     }
                                 }
                             }

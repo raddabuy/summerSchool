@@ -26,4 +26,9 @@ class Controller extends BaseController
 
         throw $error;
     }
+
+    public function __construct()
+    {
+        auth()->setDefaultDriver('api');
+    }
 }

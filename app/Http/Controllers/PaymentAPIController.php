@@ -8,6 +8,7 @@ use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\SessionRequest;
 use App\Models\PaymentSession;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -107,5 +108,18 @@ class PaymentAPIController extends Controller
 
     }
 
+    /**
+     * Get transaction during received period
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTransactions(GetTransactionRequest $request)
+    {
+        $dateFrom = new Carbon(str_replace('/','.',$request->get('from')).' 00:00:00');
+        $dateTo = new Carbon(str_replace('/','.',$request->get('to')).' 23:59:59');
+        $transactions = Transaction::whereBetween('created_at',[$dateFrom,$dateTo])->get();
+        return $this->responseOk($transactions);
+
+    }
 
 }

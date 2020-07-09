@@ -5,7 +5,7 @@ namespace App\Http\Swagger;
 abstract class PaymentAPIController
 {
     /**
-     * @OA\Info(title="LawApp", version="1.0")
+     * @OA\Info(title="Summer School", version="1.0")
      */
 
     /**
@@ -42,9 +42,7 @@ abstract class PaymentAPIController
      *                     example={
      *                         "success": "true",
      *                         "data": {
-     *                              {
      *                              "sessionId" : "string",
-     *                              }
      *                          }
      *                     }
      *                 )
@@ -87,7 +85,7 @@ abstract class PaymentAPIController
      *                     property="sessionId",
      *                     type="string"
      *                 ),
-     *              required={"sum", "details"}
+     *              required={"card_number", "cvc","dates", "sessionId"}
      *             )
      *         )
      *     ),
@@ -110,6 +108,61 @@ abstract class PaymentAPIController
      */
 
     abstract public function pay();
+
+    /**
+    * @OA\Get(
+     *     path="/api/v1/transactions",
+     *      description="Get transaction",
+     *     tags={"Transaction"},
+     *     @OA\Parameter(
+     *         description="От (08/07/2020)",
+     *         in="query",
+     *         name="from",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         description="До (09/07/2020)",
+     *         in="query",
+     *         name="to",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *     response="200",
+     *      description="Obtain transactions",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     example={
+     *                         "success": "true",
+     *                         "data": {
+     *                                  {
+     *                                       "id": 1,
+     *                                       "card_number": "1234",
+     *                                       "cvc": "1234",
+     *                                       "dates": "01/24",
+     *                                       "status": "1",
+     *                                       "session_id": 10,
+     *                                       "created_at": "2020-07-08 13:34:53",
+     *                                       "updated_at": "2020-07-08 13:34:53"
+     *                                   },
+     *
+*    *                          }
+     *                     }
+     *                 )
+     *             )
+     *         }
+     *     ),
+     * )
+     */
+
+    abstract public function getTransactions();
 
 
 }
