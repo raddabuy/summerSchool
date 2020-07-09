@@ -52,35 +52,59 @@ class PaymentAPIController extends Controller
      */
     public function pay(PaymentRequest $request)
     {
+        $card_number = $request->get('card_number');
+
+        if(!$this->is_valid_card($card_number)){
+            $this->ThrowException('Card number is wrong');
+        }
         //Compare saved session ID with received session ID
         if($request->get('sessionId') != session('sessionId')){
-            $error = new Exception('The session finished or wrong sessionId' , 422);
-
-            throw $error;
+            $this->ThrowException('The session finished or wrong sessionId');
         }
         $session = PaymentSession::where('sessionId',$request->get('sessionId'))->first();
 
-        //Check if session exists
-        if(!$session){
-            $error = new Exception('This session doesn\'t exist' , 422);
-
-            throw $error;
-        }
         //Check if session is already used
         if(Transaction::where('session_id',$session->id)->first()){
-            $error = new Exception('This session is already used', 422);
-
-            throw $error;
+            $this->ThrowException('This session is already used');
         }
 
         Transaction::create([
-            'card_number' => $request->get('card_number'),
+            'card_number' => $card_number,
             'cvc' => $request->get('cvc'),
             'dates' => $request->get('dates'),
             'status' => TransactionStatus::SUCCESS,
             'session_id' => $session->id
         ]);
         return $this->responseOk('Транзакция прошла успешно!');
+    }
+
+    /**
+     * Check if card number is valid by Luhn algorithm
+     * @param $number
+     * @return boolean
+     */
+    private function is_valid_card($number) {
+
+        $number=preg_replace('/\D/', '', $number);
+
+        $number_length=strlen($number);
+        $parity=$number_length % 2;
+
+        //Calculating total sum
+        $total=0;
+        for ($i=0; $i<$number_length; $i++) {
+            $digit=$number[$i];
+            if ($i % 2 == $parity) {
+                $digit*=2;
+                if ($digit > 9) {
+                    $digit-=9;
+                }
+            }
+            $total+=$digit;
+        }
+
+        return ($total % 10 == 0);
+
     }
 
 

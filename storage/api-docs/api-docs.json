@@ -75,15 +75,15 @@
                                 ],
                                 "properties": {
                                     "card_number": {
-                                        "description": "Номер карты",
+                                        "description": "Номер карты (4111 1111 1111 1234)",
                                         "type": "string"
                                     },
                                     "cvc": {
-                                        "description": "CVV/CVC",
+                                        "description": "CVV/CVC (111)",
                                         "type": "string"
                                     },
                                     "dates": {
-                                        "description": "Dates",
+                                        "description": "Срок действия карты (01/11)",
                                         "type": "string"
                                     },
                                     "sessionId": {

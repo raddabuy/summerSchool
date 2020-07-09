@@ -68,17 +68,17 @@ abstract class PaymentAPIController
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     description="Номер карты",
+     *                     description="Номер карты (4111 1111 1111 1234)",
      *                     property="card_number",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
-     *                     description="CVV/CVC",
+     *                     description="CVV/CVC (111)",
      *                     property="cvc",
      *                     type="string"
      *                 ),
      *                 @OA\Property(
-     *                     description="Dates",
+     *                     description="Срок действия карты (01/11)",
      *                     property="dates",
      *                     type="string"
      *                 ),
