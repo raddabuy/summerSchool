@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetTransactionRequest extends FormRequest
+class GetTransactionRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class GetTransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class GetTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'from' => ['required','regex:/^\d{2}[\/ ]\d{2}[\/ ]\d{4}+$/'],
+            'to' => ['required','regex:/^\d{2}[\/ ]\d{2}[\/ ]\d{4}+$/']
         ];
     }
 }

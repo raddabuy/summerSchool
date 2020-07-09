@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Constants\TransactionStatus;
+use App\Http\Requests\GetTransactionRequest;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\SessionRequest;
 use App\Models\PaymentSession;
