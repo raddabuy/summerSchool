@@ -132,6 +132,15 @@ abstract class PaymentAPIController
      *           type="string",
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         description="Token authorization (bearer token)",
+     *         in="header",
+     *         name="Authorization",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="string",
+     *         )
+     *     ),
      *     @OA\Response(
      *     response="200",
      *      description="Obtain transactions",
