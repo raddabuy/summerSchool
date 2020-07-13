@@ -138,6 +138,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Tokern authorization",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
